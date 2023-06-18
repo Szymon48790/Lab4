@@ -1,0 +1,25 @@
+#!/bin/bash
+
+while (( $# )); do
+  case "$1" in
+    --date|-d)
+      date
+      shift
+      ;;
+    --logs|-l)
+      num=100
+      if (( $# > 1 )); then
+        re='^[0-9]+$'
+        if [[ $2 =~ $re ]]; then
+          num=$2
+          shift
+        fi
+      fi
+      for ((i=1;i<=num;i++)); do
+        echo "Plik: log$i.txt, Skrypt: $0, Data: $(date)" > log$i.txt
+      done
+      shift
+      ;;
+    --help|-h)
+      echo "--date, -d: wyświetla dzisiejszą datę"
+      echo "--logs, -l [liczba]: tworzy podaną liczbę (domyślnie 100) plik
